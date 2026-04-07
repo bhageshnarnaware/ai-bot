@@ -24,6 +24,21 @@ from logging.handlers import RotatingFileHandler
 #from chatbot_engine import ITSupportChatbot, HybridChatbotEngine
 #from database import DatabaseManager
 
+class ITSupportChatbot:
+    def __init__(self, rules_file):
+        self.rules_file = rules_file
+
+    def get_response(self, message):
+        return {
+            "response": "This is a test response",
+            "confidence": 1.0,
+            "category": "General",
+            "escalation_required": False
+        }
+
+class HybridChatbotEngine:
+    pass
+
 # Initialize Flask application
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
