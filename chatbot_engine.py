@@ -34,8 +34,8 @@ app.config['JSON_SORT_KEYS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max request size
 
 # Initialize components
-chatbot = ITSupportChatbot('rules.json')
-db = DatabaseManager()
+#chatbot = ITSupportChatbot('rules.json')
+#db = DatabaseManager()
 
 # Setup logging
 def setup_logging():
