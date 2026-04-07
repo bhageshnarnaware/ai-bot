@@ -21,7 +21,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 # Import custom modules
-from chatbot_engine import ITSupportChatbot, HybridChatbotEngine
+#from chatbot_engine import ITSupportChatbot, HybridChatbotEngine
 from database import DatabaseManager
 
 # Initialize Flask application
