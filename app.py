@@ -1,484 +1,646 @@
-# AI-Based Chatbot for IT Support
-
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![Flask](https://img.shields.io/badge/Flask-2.3.3-green.svg)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-
-A complete, production-style AI chatbot designed to automatically resolve common IT problems for users. This intelligent system simulates a real IT helpdesk chatbot that assists users with troubleshooting technical issues and reduces the workload of human IT support staff.
-
-![IT Support Chatbot](https://via.placeholder.com/800x400/4f46e5/ffffff?text=IT+Support+Chatbot)
-
-## Features
-
-- **Smart Chatbot Interface** - Modern, responsive chat UI with message bubbles, typing indicators, and timestamps
-- **Rule-Based AI Engine** - Pattern matching with keyword detection and confidence scoring
-- **IT Knowledge Base** - 30+ comprehensive troubleshooting rules covering common IT issues
-- **Support Ticket System** - Create and manage support tickets with SQLite database
-- **Chat History Logging** - Store conversation logs for analysis and improvement
-- **Dialogflow Integration** - Optional Google Dialogflow integration for advanced NLP
-- **Dark/Light Theme** - Toggle between themes for user preference
-- **Mobile Responsive** - Works seamlessly on desktop, tablet, and mobile devices
-
-## Supported IT Issues
-
-The chatbot can help with:
-
-- Internet & WiFi connectivity problems
-- Password resets and account issues
-- Printer troubleshooting
-- Slow computer performance
-- Software installation issues
-- Blue screen (BSOD) errors
-- Email synchronization problems
-- Keyboard and mouse issues
-- VPN connection problems
-- Virus and malware concerns
-- File recovery
-- Monitor/display issues
-- Audio problems
-- Browser issues
-- Microsoft Office problems
-- USB device detection
-- Video conferencing issues
-- Disk space management
-- Windows updates
-- And more...
-
-## Technology Stack
-
-### Backend
-- **Python 3.8+**
-- **Flask Web Framework** - RESTful API endpoints
-- **SQLite** - Database for tickets and chat history
-
-### AI / NLP
-- **Pattern Matching** - Keyword and regex-based matching
-- **SequenceMatcher** - Similarity scoring for fuzzy matching
-- **NLTK** (optional) - Advanced text processing
-- **Google Dialogflow** (optional) - Cloud-based NLP
-
-### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with CSS variables
-- **JavaScript (ES6+)** - Interactive functionality
-- **Font Awesome** - Icons
-- **Google Fonts** - Inter font family
-
-## Project Structure
-
-```
-AI_IT_SUPPORT_CHATBOT/
-│
-├── app.py                      # Main Flask application
-├── chatbot_engine.py           # Rule-based AI engine
-├── database.py                 # SQLite database manager
-├── rules.json                  # IT knowledge base (30+ rules)
-├── requirements.txt            # Python dependencies
-│
-├── templates/
-│   └── index.html              # Main chat interface
-│
-├── static/
-│   ├── css/
-│   │   └── style.css           # Stylesheet with themes
-│   └── js/
-│       └── script.js           # Frontend JavaScript
-│
-├── logs/
-│   └── chatbot.log             # Application logs
-│
-├── database/
-│   └── tickets.db              # SQLite database
-│
-├── dialogflow/
-│   ├── intents.json            # Dialogflow intent definitions
-│   └── webhook_handler.py      # Dialogflow webhook handler
-│
-└── README.md                   # This file
-```
-
-## Installation
-
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package manager)
-- Git (optional)
-
-### Step 1: Clone or Download
-
-```bash
-# Clone the repository (if using git)
-git clone <repository-url>
-cd AI_IT_SUPPORT_CHATBOT
-
-# Or download and extract the ZIP file
-cd AI_IT_SUPPORT_CHATBOT
-```
-
-### Step 2: Create Virtual Environment (Recommended)
-
-```bash
-# Windows
-python -m venv venv
-venv\Scripts\activate
-
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### Step 3: Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Step 4: Run the Application
-
-```bash
-python app.py
-```
-
-The application will start on `http://localhost:5000`
-
-Open your browser and navigate to: http://localhost:5000
-
-## Usage
-
-### Starting the Chatbot
-
-1. Open your web browser and go to `http://localhost:5000`
-2. The chatbot will greet you with a welcome message
-3. Type your IT issue in the input box and press Enter
-4. The chatbot will analyze your query and provide troubleshooting steps
-
-### Example Conversations
-
-**Internet Issue:**
-```
-User: My WiFi is not working
-Bot: Let's troubleshoot your internet connection:
-
-1. Check if your WiFi is enabled on your device
-2. Restart your router/modem (unplug for 30 seconds)
-3. Check network cables are securely connected
-...
-```
-
-**Password Reset:**
-```
-User: I forgot my password
-Bot: For password reset assistance:
-
-1. Visit the self-service password portal: password.company.com
-2. Click 'Forgot Password' and enter your email
-3. Check your email for reset instructions
-...
-```
-
-### Creating a Support Ticket
-
-If the chatbot cannot resolve your issue:
-
-1. Click the **ticket icon** in the header
-2. Fill in your name, email, and issue description
-3. Select the appropriate category and priority
-4. Click **Submit Ticket**
-5. You will receive a ticket number for reference
-
-### Keyboard Shortcuts
-
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl/Cmd + K` | Focus message input |
-| `Ctrl/Cmd + N` | Start new chat |
-| `Ctrl/Cmd + T` | Open ticket form |
-| `Esc` | Close modal |
-| `Enter` | Send message |
-| `Shift + Enter` | New line in message |
-
-## API Endpoints
-
-### Chat Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/chat` | POST | Send message to chatbot |
-| `/api/chat/suggestions` | GET | Get chat suggestions |
-| `/api/chat/categories` | GET | Get all issue categories |
-
-### Ticket Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/tickets` | POST | Create new ticket |
-| `/api/tickets` | GET | List all tickets |
-| `/api/tickets/<ticket_number>` | GET | Get ticket details |
-| `/api/tickets/<ticket_number>/status` | PUT | Update ticket status |
-| `/api/tickets/search` | GET | Search tickets |
-| `/api/tickets/user/<email>` | GET | Get user's tickets |
-
-### Session Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/sessions` | POST | Start new session |
-| `/api/sessions/<session_id>/end` | POST | End session |
-| `/api/sessions/<session_id>/history` | GET | Get chat history |
-
-### Statistics
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/statistics` | GET | Get system statistics |
-
-### Dialogflow
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/dialogflow/webhook` | POST | Dialogflow webhook |
-
-## Rule-Based AI Engine
-
-The chatbot uses a sophisticated rule-based engine with:
-
-### Pattern Matching Techniques
-
-1. **Exact Match** - Direct string comparison
-2. **Substring Match** - Pattern contained in input
-3. **Word Boundary Match** - All pattern words present
-4. **Similarity Scoring** - SequenceMatcher for fuzzy matching
-5. **Keyword Matching** - Keyword presence scoring
-
-### Confidence Scoring
-
-The engine calculates confidence scores (0.0 to 1.0) based on:
-- Pattern match quality
-- Keyword presence
-- Combined scoring algorithm
-
-Threshold: 0.6 (responses below this show fallback message)
-
-### Adding New Rules
-
-Edit `rules.json` to add new troubleshooting rules:
-
-```json
-{
-  "id": 31,
-  "category": "Your Category",
-  "patterns": [
-    "pattern one",
-    "pattern two"
-  ],
-  "keywords": ["keyword1", "keyword2"],
-  "response": "Your troubleshooting response here",
-  "escalation_required": false
-}
-```
-
-## Dialogflow Integration
-
-### Setup
-
-1. Create a Google Cloud project
-2. Enable Dialogflow API
-3. Create a service account and download credentials
-4. Set environment variable:
-   ```bash
-   export GOOGLE_APPLICATION_CREDENTIALS="path/to/credentials.json"
-   ```
-
-### Import Intents
-
-1. Go to Dialogflow Console
-2. Select your agent
-3. Go to **Settings** > **Export and Import**
-4. Import `dialogflow/intents.json`
-
-### Webhook Configuration
-
-1. In Dialogflow Console, go to **Fulfillment**
-2. Enable **Webhook**
-3. Set URL to: `https://your-domain.com/api/dialogflow/webhook`
-4. Save
-
-## Database Schema
-
-### support_tickets Table
-
-| Column | Type | Description |
-|--------|------|-------------|
-| id | INTEGER | Primary key |
-| ticket_number | TEXT | Unique ticket ID (IT-YYYYMMDD-XXXX) |
-| name | TEXT | User's name |
-| email | TEXT | User's email |
-| issue_description | TEXT | Problem description |
-| category | TEXT | Issue category |
-| priority | TEXT | Low/Medium/High/Critical |
-| status | TEXT | Open/In Progress/Resolved/Closed |
-| created_at | TIMESTAMP | Creation time |
-| updated_at | TIMESTAMP | Last update |
-| resolved_at | TIMESTAMP | Resolution time |
-| assigned_to | TEXT | Assigned technician |
-| resolution_notes | TEXT | Resolution details |
-| chat_session_id | TEXT | Associated chat session |
-
-### chat_history Table
-
-| Column | Type | Description |
-|--------|------|-------------|
-| id | INTEGER | Primary key |
-| session_id | TEXT | Chat session ID |
-| timestamp | TIMESTAMP | Message time |
-| user_message | TEXT | User's message |
-| bot_response | TEXT | Bot's response |
-| confidence | REAL | Match confidence |
-| category | TEXT | Issue category |
-| escalation_triggered | BOOLEAN | Escalation flag |
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `SECRET_KEY` | Flask secret key | `dev-secret-key` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Dialogflow credentials | None |
-| `DIALOGFLOW_PROJECT_ID` | Dialogflow project ID | None |
-| `FLASK_ENV` | Environment (development/production) | `development` |
-| `FLASK_PORT` | Server port | `5000` |
-
-### Creating .env File
-
-```bash
-# Create .env file
-touch .env
-
-# Add configuration
-echo "SECRET_KEY=your-secret-key-here" >> .env
-echo "FLASK_ENV=development" >> .env
-```
-
-## Testing
-
-### Running Tests
-
-```bash
-# Install test dependencies
-pip install pytest pytest-flask
-
-# Run tests
-pytest
-```
-
-### Manual Testing
-
-Test the chatbot with these sample queries:
-
-```
-- "Hello"
-- "My internet is not working"
-- "I forgot my password"
-- "Printer is offline"
-- "Computer is slow"
-- "Blue screen error"
-- "Cannot connect to VPN"
-- "Email not syncing"
-- "Thanks, bye!"
-```
-
-## Deployment
-
-### Local Deployment
-
-```bash
-python app.py
-```
-
-### Production Deployment with Gunicorn
-
-```bash
-# Install gunicorn
-pip install gunicorn
-
-# Run with gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
-
-### Docker Deployment
-
-```dockerfile
-FROM python:3.9-slim
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-
-EXPOSE 5000
-
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
-```
-
-Build and run:
-```bash
-docker build -t it-support-chatbot .
-docker run -p 5000:5000 it-support-chatbot
-```
-
-## Screenshots
-
-### Chat Interface
-![Chat Interface](https://via.placeholder.com/600x400/4f46e5/ffffff?text=Chat+Interface)
-
-### Ticket Form
-![Ticket Form](https://via.placeholder.com/600x400/10b981/ffffff?text=Ticket+Form)
-
-### Mobile View
-![Mobile View](https://via.placeholder.com/300x600/6366f1/ffffff?text=Mobile+View)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Flask framework and community
-- Font Awesome for icons
-- Google Fonts for typography
-- Dialogflow for NLP capabilities
-
-## Support
-
-For support, please:
-1. Check the troubleshooting section in this README
-2. Create an issue in the repository
-3. Contact the development team
-
-## Roadmap
-
-- [ ] Machine learning integration for intent classification
-- [ ] Multi-language support
-- [ ] Voice input/output
-- [ ] Integration with ticketing systems (Jira, ServiceNow)
-- [ ] Admin dashboard with analytics
-- [ ] User authentication and profiles
-- [ ] File attachment support
-- [ ] Real-time notifications
-
----
-
-**Built with ❤️ for IT Support Teams**
-
-For questions or feedback, please reach out to the development team.
+"""
+AI IT Support Chatbot - Flask Application
+=========================================
+Main entry point for the IT Support Chatbot web application.
+
+This application provides:
+- RESTful API endpoints for chatbot interaction
+- Support ticket management
+- Chat history logging
+- Dialogflow integration
+- Web interface for chat
+"""
+
+from flask import Flask, render_template, request, jsonify, session
+from flask_cors import CORS
+from datetime import datetime
+import uuid
+import os
+import json
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Import custom modules
+from chatbot_engine import ITSupportChatbot, HybridChatbotEngine
+from database import DatabaseManager
+
+# Initialize Flask application
+app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+CORS(app)  # Enable CORS for all routes
+
+# Configuration
+app.config['JSON_SORT_KEYS'] = False
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max request size
+
+# Initialize components
+chatbot = ITSupportChatbot('rules.json')
+db = DatabaseManager()
+
+# Setup logging
+def setup_logging():
+    """Configure application logging."""
+    log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
+    os.makedirs(log_dir, exist_ok=True)
+    
+    log_file = os.path.join(log_dir, 'chatbot.log')
+    
+    handler = RotatingFileHandler(
+        log_file, 
+        maxBytes=10485760,  # 10MB
+        backupCount=10
+    )
+    handler.setLevel(logging.INFO)
+    
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    handler.setFormatter(formatter)
+    
+    app.logger.addHandler(handler)
+    app.logger.setLevel(logging.INFO)
+    
+    # Also log to console
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(formatter)
+    app.logger.addHandler(console_handler)
+
+setup_logging()
+
+# ==================== WEB ROUTES ====================
+
+@app.route('/')
+def index():
+    """
+    Render the main chat interface.
+    
+    Returns:
+        HTML template for chat interface
+    """
+    # Generate session ID if not exists
+    if 'session_id' not in session:
+        session['session_id'] = str(uuid.uuid4())
+    
+    return render_template('index.html')
+
+@app.route('/admin')
+def admin_dashboard():
+    """
+    Render admin dashboard (placeholder).
+    
+    Returns:
+        Simple admin page with statistics
+    """
+    stats = db.get_ticket_statistics()
+    return jsonify({
+        'message': 'Admin Dashboard',
+        'statistics': stats
+    })
+
+# ==================== API ROUTES - CHAT ====================
+
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    """
+    Main chat endpoint - process user message and return bot response.
+    
+    Request Body:
+        {
+            "message": "User's message",
+            "session_id": "optional-session-id"
+        }
+    
+    Returns:
+        {
+            "response": "Bot's response",
+            "confidence": 0.95,
+            "category": "Issue Category",
+            "escalation_required": false,
+            "session_id": "session-id"
+        }
+    """
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                'success': False,
+                'error': 'No JSON data provided'
+            }), 400
+        
+        user_message = data.get('message', '').strip()
+        session_id = data.get('session_id') or session.get('session_id') or str(uuid.uuid4())
+        
+        if not user_message:
+            return jsonify({
+                'success': False,
+                'error': 'Message is required'
+            }), 400
+        
+        # Log the incoming message
+        app.logger.info(f"Chat request - Session: {session_id}, Message: {user_message[:50]}...")
+        
+        # Get response from chatbot
+        result = chatbot.get_response(user_message)
+        
+        # Log chat to database
+        db.log_chat_message(
+            session_id=session_id,
+            user_message=user_message,
+            bot_response=result['response'],
+            confidence=result.get('confidence'),
+            category=result.get('category'),
+            escalation_triggered=result.get('escalation_required', False)
+        )
+        
+        # Prepare response
+        response_data = {
+            'success': True,
+            'response': result['response'],
+            'confidence': result.get('confidence', 0),
+            'category': result.get('category', 'Unknown'),
+            'escalation_required': result.get('escalation_required', False),
+            'session_id': session_id,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        app.logger.info(f"Chat response - Category: {result.get('category')}, Confidence: {result.get('confidence')}")
+        
+        return jsonify(response_data)
+        
+    except Exception as e:
+        app.logger.error(f"Error in chat endpoint: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/chat/suggestions', methods=['GET'])
+def get_suggestions():
+    """
+    Get chat suggestions based on partial input.
+    
+    Query Parameters:
+        q: Partial input text
+    
+    Returns:
+        List of suggested categories
+    """
+    query = request.args.get('q', '').strip()
+    
+    if len(query) < 2:
+        return jsonify({'suggestions': []})
+    
+    suggestions = chatbot.get_suggestions(query)
+    
+    return jsonify({
+        'suggestions': suggestions,
+        'query': query
+    })
+
+@app.route('/api/chat/categories', methods=['GET'])
+def get_categories():
+    """
+    Get all available issue categories.
+    
+    Returns:
+        List of category names
+    """
+    categories = chatbot.get_all_categories()
+    
+    return jsonify({
+        'categories': categories,
+        'count': len(categories)
+    })
+
+# ==================== API ROUTES - TICKETS ====================
+
+@app.route('/api/tickets', methods=['POST'])
+def create_ticket():
+    """
+    Create a new support ticket.
+    
+    Request Body:
+        {
+            "name": "User's name",
+            "email": "User's email",
+            "issue_description": "Detailed description",
+            "category": "Issue category",
+            "priority": "Low/Medium/High/Critical",
+            "session_id": "optional-chat-session-id"
+        }
+    
+    Returns:
+        Ticket creation result with ticket number
+    """
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                'success': False,
+                'error': 'No JSON data provided'
+            }), 400
+        
+        # Validate required fields
+        required_fields = ['name', 'email', 'issue_description']
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({
+                    'success': False,
+                    'error': f'{field.replace("_", " ").title()} is required'
+                }), 400
+        
+        # Create ticket
+        result = db.create_ticket(
+            name=data.get('name').strip(),
+            email=data.get('email').strip().lower(),
+            issue_description=data.get('issue_description').strip(),
+            category=data.get('category', 'General'),
+            priority=data.get('priority', 'Medium'),
+            chat_session_id=data.get('session_id')
+        )
+        
+        if result['success']:
+            app.logger.info(f"Ticket created: {result['ticket_number']} for {data.get('email')}")
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        app.logger.error(f"Error creating ticket: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Failed to create ticket',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/tickets/<ticket_number>', methods=['GET'])
+def get_ticket(ticket_number):
+    """
+    Get ticket details by ticket number.
+    
+    Args:
+        ticket_number: Unique ticket identifier
+    
+    Returns:
+        Ticket details
+    """
+    ticket = db.get_ticket(ticket_number)
+    
+    if ticket:
+        return jsonify({
+            'success': True,
+            'ticket': ticket
+        })
+    else:
+        return jsonify({
+            'success': False,
+            'error': f'Ticket {ticket_number} not found'
+        }), 404
+
+@app.route('/api/tickets/user/<email>', methods=['GET'])
+def get_user_tickets(email):
+    """
+    Get all tickets for a specific user.
+    
+    Args:
+        email: User's email address
+    
+    Query Parameters:
+        limit: Maximum number of tickets (default: 10)
+    
+    Returns:
+        List of user's tickets
+    """
+    limit = request.args.get('limit', 10, type=int)
+    tickets = db.get_tickets_by_email(email, limit)
+    
+    return jsonify({
+        'success': True,
+        'email': email,
+        'count': len(tickets),
+        'tickets': tickets
+    })
+
+@app.route('/api/tickets/<ticket_number>/status', methods=['PUT'])
+def update_ticket_status(ticket_number):
+    """
+    Update ticket status.
+    
+    Args:
+        ticket_number: Unique ticket identifier
+    
+    Request Body:
+        {
+            "status": "Open/In Progress/Resolved/Closed",
+            "resolution_notes": "Optional notes"
+        }
+    
+    Returns:
+        Update result
+    """
+    try:
+        data = request.get_json()
+        
+        if not data or not data.get('status'):
+            return jsonify({
+                'success': False,
+                'error': 'Status is required'
+            }), 400
+        
+        result = db.update_ticket_status(
+            ticket_number=ticket_number,
+            status=data.get('status'),
+            resolution_notes=data.get('resolution_notes')
+        )
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        app.logger.error(f"Error updating ticket: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Failed to update ticket'
+        }), 500
+
+@app.route('/api/tickets', methods=['GET'])
+def list_tickets():
+    """
+    List all tickets with optional filtering.
+    
+    Query Parameters:
+        status: Filter by status
+        limit: Maximum results (default: 50)
+        offset: Pagination offset (default: 0)
+    
+    Returns:
+        List of tickets
+    """
+    status = request.args.get('status')
+    limit = request.args.get('limit', 50, type=int)
+    offset = request.args.get('offset', 0, type=int)
+    
+    tickets = db.get_all_tickets(status=status, limit=limit, offset=offset)
+    
+    return jsonify({
+        'success': True,
+        'count': len(tickets),
+        'tickets': tickets
+    })
+
+@app.route('/api/tickets/search', methods=['GET'])
+def search_tickets():
+    """
+    Search tickets by keyword.
+    
+    Query Parameters:
+        q: Search query
+        limit: Maximum results (default: 20)
+    
+    Returns:
+        List of matching tickets
+    """
+    query = request.args.get('q', '').strip()
+    limit = request.args.get('limit', 20, type=int)
+    
+    if not query:
+        return jsonify({
+            'success': False,
+            'error': 'Search query is required'
+        }), 400
+    
+    tickets = db.search_tickets(query, limit)
+    
+    return jsonify({
+        'success': True,
+        'query': query,
+        'count': len(tickets),
+        'tickets': tickets
+    })
+
+# ==================== API ROUTES - STATISTICS ====================
+
+@app.route('/api/statistics', methods=['GET'])
+def get_statistics():
+    """
+    Get system statistics.
+    
+    Returns:
+        Ticket and chat statistics
+    """
+    try:
+        ticket_stats = db.get_ticket_statistics()
+        
+        return jsonify({
+            'success': True,
+            'statistics': {
+                'tickets': ticket_stats,
+                'timestamp': datetime.now().isoformat()
+            }
+        })
+    except Exception as e:
+        app.logger.error(f"Error getting statistics: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Failed to get statistics'
+        }), 500
+
+# ==================== API ROUTES - CHAT SESSIONS ====================
+
+@app.route('/api/sessions', methods=['POST'])
+def start_session():
+    """
+    Start a new chat session.
+    
+    Request Body:
+        {
+            "user_name": "Optional user name",
+            "user_email": "Optional user email"
+        }
+    
+    Returns:
+        Session ID
+    """
+    try:
+        data = request.get_json() or {}
+        session_id = str(uuid.uuid4())
+        
+        db.start_chat_session(
+            session_id=session_id,
+            user_name=data.get('user_name'),
+            user_email=data.get('user_email')
+        )
+        
+        # Store in Flask session
+        session['session_id'] = session_id
+        
+        return jsonify({
+            'success': True,
+            'session_id': session_id,
+            'message': 'Session started successfully'
+        })
+        
+    except Exception as e:
+        app.logger.error(f"Error starting session: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Failed to start session'
+        }), 500
+
+@app.route('/api/sessions/<session_id>/end', methods=['POST'])
+def end_session(session_id):
+    """
+    End a chat session.
+    
+    Args:
+        session_id: Session identifier
+    
+    Request Body:
+        {
+            "issue_resolved": true/false
+        }
+    
+    Returns:
+        End session result
+    """
+    try:
+        data = request.get_json() or {}
+        
+        result = db.end_chat_session(
+            session_id=session_id,
+            issue_resolved=data.get('issue_resolved', False)
+        )
+        
+        return jsonify({
+            'success': result,
+            'message': 'Session ended' if result else 'Session not found'
+        })
+        
+    except Exception as e:
+        app.logger.error(f"Error ending session: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Failed to end session'
+        }), 500
+
+@app.route('/api/sessions/<session_id>/history', methods=['GET'])
+def get_session_history(session_id):
+    """
+    Get chat history for a session.
+    
+    Args:
+        session_id: Session identifier
+    
+    Returns:
+        Chat history
+    """
+    try:
+        history = db.get_chat_history(session_id)
+        
+        return jsonify({
+            'success': True,
+            'session_id': session_id,
+            'count': len(history),
+            'history': history
+        })
+        
+    except Exception as e:
+        app.logger.error(f"Error getting session history: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Failed to get session history'
+        }), 500
+
+# ==================== DIALOGFLOW INTEGRATION ====================
+
+@app.route('/api/dialogflow/webhook', methods=['POST'])
+def dialogflow_webhook():
+    """
+    Dialogflow webhook endpoint for fulfillment.
+    
+    Returns:
+        Dialogflow-compatible response
+    """
+    try:
+        req = request.get_json()
+        
+        # Extract intent and parameters from Dialogflow request
+        intent = req.get('queryResult', {}).get('intent', {}).get('displayName', '')
+        parameters = req.get('queryResult', {}).get('parameters', {})
+        query_text = req.get('queryResult', {}).get('queryText', '')
+        
+        app.logger.info(f"Dialogflow webhook - Intent: {intent}, Query: {query_text}")
+        
+        # Get response from our chatbot
+        result = chatbot.get_response(query_text)
+        
+        # Format response for Dialogflow
+        response = {
+            'fulfillmentText': result['response'],
+            'fulfillmentMessages': [
+                {
+                    'text': {
+                        'text': [result['response']]
+                    }
+                }
+            ],
+            'payload': {
+                'confidence': result.get('confidence'),
+                'category': result.get('category'),
+                'escalation_required': result.get('escalation_required', False)
+            }
+        }
+        
+        return jsonify(response)
+        
+    except Exception as e:
+        app.logger.error(f"Error in Dialogflow webhook: {str(e)}")
+        return jsonify({
+            'fulfillmentText': 'Sorry, I encountered an error processing your request.'
+        })
+
+# ==================== ERROR HANDLERS ====================
+
+@app.errorhandler(404)
+def not_found(error):
+    """Handle 404 errors."""
+    return jsonify({
+        'success': False,
+        'error': 'Endpoint not found'
+    }), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    """Handle 500 errors."""
+    app.logger.error(f"Internal server error: {str(error)}")
+    return jsonify({
+        'success': False,
+        'error': 'Internal server error'
+    }), 500
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    """Handle 405 errors."""
+    return jsonify({
+        'success': False,
+        'error': 'Method not allowed'
+    }), 405
+
+# ==================== MAIN ====================
+
+if __name__ == '__main__':
+    print("=" * 60)
+    print("AI IT Support Chatbot Server")
+    print("=" * 60)
+    print("\nStarting server...")
+    print("Access the chat interface at: http://localhost:5000")
+    print("\nPress Ctrl+C to stop the server\n")
+    
+    # Run the Flask application
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=True,
+        threaded=True
+    )
