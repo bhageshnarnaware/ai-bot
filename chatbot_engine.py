@@ -22,7 +22,7 @@ from logging.handlers import RotatingFileHandler
 
 # Import custom modules
 #from chatbot_engine import ITSupportChatbot, HybridChatbotEngine
-#from database import DatabaseManager
+from database import DatabaseManager
 
 class ITSupportChatbot:
     def __init__(self, rules_file):
